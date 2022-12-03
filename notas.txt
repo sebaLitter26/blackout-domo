@@ -1,0 +1,5 @@
+
+git remote add origin https://github.com/sebaLitter26/blackout-domo.git
+git push -u -f origin master
+
+git rm -r --cached .angular
