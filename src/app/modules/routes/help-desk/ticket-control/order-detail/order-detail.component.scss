@@ -1,0 +1,173 @@
+$ean-image-size: 25vh;
+
+main {
+    padding: 20px;
+    box-sizing: border-box;
+
+    
+
+    .dashboard {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 10px;
+        align-items: center;
+        margin-bottom: 1rem;
+    
+        h1 {
+            margin: 0;
+        }
+    
+        .dash_card{
+            width: -webkit-fill-available;
+            
+        }
+    }
+
+    
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-top: 5px;
+
+    .action-btn{
+
+        button{
+            margin-left: 18px;
+
+            .back {
+                float: right;
+            }
+        }
+
+        
+        
+    }
+}
+
+.tables-container {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: flex-start;
+    width: 100%;
+    padding-top: 10px;
+}
+
+.table-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    width: 100%;
+    //max-height: 400px;
+    overflow-y: auto;
+    box-sizing: border-box;
+
+}
+
+mat-card{
+    padding: 5px;
+    box-sizing: border-box;
+
+    .product-detail{
+        padding: 10px;
+    }
+    
+    .product-information{
+        justify-content: space-between;
+        align-items: center;
+    }
+}
+
+
+
+
+.ean-image-container {
+    min-width: $ean-image-size;
+    min-height: $ean-image-size;
+    margin: 1rem;
+    
+
+    img {
+        width: $ean-image-size !important;
+        height: $ean-image-size !important;
+    }
+
+    .mat-card-image{
+        border-radius: 0.5em;
+    }
+}
+
+
+.radio-negociado{
+    margin: 10px;
+}
+
+.header-fixed{
+    position: sticky !important;
+    position: -webkit-sticky;
+    top: 0em !important;
+    z-index: 2;
+    background-color: var(--color-hold);
+    opacity: 0.9;
+    padding: 5px;
+    border-radius: 10px;
+    max-width: 800px;
+    margin: 0 auto;
+
+    .filters-container {
+        display: grid;
+        gap: 0.35rem;
+        grid-template-columns: repeat(3, minmax(150px, 1fr));
+        height: 55px;
+    }
+
+    .actions-container {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: right;
+        height: 35px;
+    
+        .actions-filters {
+            margin-left: auto;
+
+            button:not(:last-child) {
+                margin: 0.5rem;
+            }
+        }
+
+        .first-option {
+            ::ng-deep.mat-option-text {
+                color: var(--color-text-fade);
+            }
+        }
+
+        .btn-small {
+            ::ng-deep.mat-button-wrapper {
+                height: 30px;
+            }
+        }
+
+        .mat-form-field {
+            font-size: 12px;
+        
+            ::ng-deep.mat-form-field-flex {
+                padding: 5px 10px 0px 10px;
+            }
+        }
+
+        button {
+            ::ng-deep.mat-button-wrapper {
+                display: flex;
+                flex-direction: row;
+                align-items: center;
+                justify-content: center;
+                text-align: center;
+            }
+        }
+    }
+}
+

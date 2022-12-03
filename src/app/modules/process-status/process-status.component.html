@@ -1,0 +1,75 @@
+<main [style.flex-direction]="orientation == 'horizontal' ? 'row' : 'column'">
+    <ng-container *ngFor="let step of steps; let i = index;">
+        <div class="step" [style.flex-direction]="orientation == 'horizontal' ? 'column' : 'row'">
+            <div
+                *ngIf="labelPosition == 'before' && (useLabels || useSecondaryLabels)"
+                class="labels-container"
+                [ngClass]="orientation == 'vertical' ? 'right-label' : 'top-label'"
+                [style.padding-top]="i == 0 && orientation == 'vertical' ? '27px' : ''"
+                [style.padding-bottom]="i == steps.length - 1 && orientation == 'vertical' ? '27px' : ''"
+                [style.padding-left]="i == 0 && orientation == 'horizontal' ? '27px' : ''"
+                [style.padding-right]="i == steps.length - 1 && orientation == 'horizontal' ? '27px' : ''"
+            >
+                <h3 *ngIf="useLabels && step.primaryLabel" class="primary-label">
+                    {{ step.primaryLabel }}
+                </h3>
+                <h3 *ngIf="useSecondaryLabels && step.secondaryLabel" class="secondary-label">
+                    {{ step.secondaryLabel }}
+                </h3>
+            </div>
+
+            <div [id]="step.processStepId" class="step-container" [style.flex-direction]="orientation == 'horizontal' ? 'row' : 'column'">
+                <div class="dot" *ngIf="i == 0" [ngStyle]="styleStatusMap[step.status]['connector-left']"></div>
+
+                <div
+                    class="connector"
+                    [style.width]="orientation == 'horizontal' ? connectorWidth + 'px' : '2px'"
+                    [style.height]="orientation == 'vertical' ? connectorWidth + 'px' : '2px'"
+                    [ngStyle]="styleStatusMap[step.status]['connector-left']"
+                ></div>
+
+                <div class="image-container" matRipple [ngStyle]="styleStatusMap[step.status]['image-container']" (click)="handleStepClick($event, step, i)">
+                    <img [src]="step.iconSrc" [ngStyle]="styleStatusMap[step.status]['image']">
+                </div>
+
+                <div
+                    class="connector"
+                    [style.width]="orientation == 'horizontal' ? connectorWidth + 'px' : '2px'"
+                    [style.height]="orientation == 'vertical' ? connectorWidth + 'px' : '2px'"
+                    [ngStyle]="styleStatusMap[step.status]['connector-right']"
+                ></div>
+
+                <div class="dot" *ngIf="i == steps.length - 1" [ngStyle]="styleStatusMap[step.status]['connector-right']"></div>
+            </div>
+
+            <div
+                *ngIf="labelPosition == 'after' && (useLabels || useSecondaryLabels)"
+                class="labels-container"
+                [ngClass]="orientation == 'vertical' ? 'left-label' : 'bottom-label'"
+                [style.padding-top]="i == 0 && orientation == 'vertical' ? '27px' : ''"
+                [style.padding-bottom]="i == steps.length - 1 && orientation == 'vertical' ? '27px' : ''"
+                [style.padding-left]="i == 0 && orientation == 'horizontal' ? '27px' : ''"
+                [style.padding-right]="i == steps.length - 1 && orientation == 'horizontal' ? '27px' : ''"
+            >
+                <h3 *ngIf="useLabels && step.primaryLabel" class="primary-label">
+                    {{ step.primaryLabel }}
+                </h3>
+                <h3 *ngIf="useSecondaryLabels && step.secondaryLabel" class="secondary-label">
+                    {{ step.secondaryLabel }}
+                </h3>
+            </div>
+        </div>
+
+        <!-- Panel dinámico para mostrar detalles de un step. -->
+        <div
+            *ngIf="orientation == 'vertical'"
+            [id]="'dp-' + step.processStepId"
+            class="data-panel"
+            [ngClass]="displayedPanel == step.processStepId ? 'data-panel mat-elevation-z24' : ''"
+            [@detailExpand]="displayedPanel == step.processStepId ? 'expanded' : 'collapsed'"
+        >
+            <!-- Host para componentes dinámicos. Se toma el componente correspondiente al step que se está mostrando, por índice posicional (valor i). -->
+            <ng-template panelDataHost></ng-template>
+        </div>
+    </ng-container>
+</main>

@@ -1,0 +1,60 @@
+<h1 mat-dialog-title>Editar permiso</h1>
+<form [formGroup]="myForm">
+    <div class="wrap">
+        <!-- Campos del formulario -->
+        <mat-form-field class="mat-form">
+            <mat-label>Número: {{ data.id_permiso }}</mat-label>
+            <input disabled matInput />
+        </mat-form-field>
+
+        <mat-form-field class="mat-form">
+            <mat-label>Permiso</mat-label>
+            <input
+                matInput
+                type="text"
+                placeholder="Modifique el campo"
+                autocomplete="off"
+                formControlName="permiso"
+                spellcheck="false"
+            />
+        </mat-form-field>
+
+        <mat-form-field class="mat-form">
+            <mat-label>Descripción</mat-label>
+            <input
+                matInput
+                type="text"
+                placeholder="Modifique el campo"
+                autocomplete="off"
+                formControlName="descripcion"
+                spellcheck="false"
+            />
+        </mat-form-field>
+
+        <mat-form-field class="mat-form">
+            <mat-label>Habilitado: {{ enabled }}</mat-label>
+            <input disabled matInput />
+        </mat-form-field>
+
+        <mat-form-field class="mat-form">
+            <mat-label>Fecha de creación: {{ data.fecha_creacion }}</mat-label>
+            <input disabled matInput />
+        </mat-form-field>
+        <!-- Alerta -->
+        <span *ngIf="notValid()">Faltan completar datos.</span>
+        <!-- Botones -->
+        <div class="wrap-btn" mat-dialog-actions>
+            <button
+                mat-flat-button
+                appRoundButton
+                color="accent"
+                [mat-dialog-close]="data.descripcion"
+                cdkFocusInitial
+                [disabled]="myForm.invalid"
+                (click)="savePermission()"
+            >
+                Guardar
+            </button>
+        </div>
+    </div>
+</form>

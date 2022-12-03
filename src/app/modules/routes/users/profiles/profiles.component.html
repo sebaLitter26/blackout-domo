@@ -1,0 +1,13 @@
+<main>
+    <div class="container">
+        <h1>Gestión de perfiles</h1>
+        <div class="btn-container">
+            <button (click)="openDialog()" mat-flat-button appRoundButton color="primary">
+                Crear perfil
+            </button>
+        </div>
+    </div>
+    <app-profiles-list
+        searchBarMargin="0 0 1em 0"
+    ></app-profiles-list>
+</main>

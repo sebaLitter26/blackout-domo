@@ -1,0 +1,6 @@
+<ng-container *ngIf="enabled; else disabled">
+    <i class="fa fas fa-check"></i>
+</ng-container>
+<ng-template #disabled>
+    <i class="fa fal fa-times"></i>
+</ng-template>

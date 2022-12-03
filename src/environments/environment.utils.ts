@@ -1,0 +1,1 @@
+export const redcoto: string = '.redcoto.com.ar'

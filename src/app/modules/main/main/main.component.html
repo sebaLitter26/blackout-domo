@@ -1,0 +1,12 @@
+<app-header class="header"></app-header>
+
+<div class="main-container">
+    <app-navbar class="navbar" [ngClass]="!navbarIsOpen ? 'closed-navbar-nav' : ''"></app-navbar>
+    
+    <div class="routes" [ngClass]="navbarIsOpen ? 'expanded' : ''" [@routeAnimations]="prepareRoute(outlet)">
+        <router-outlet  #outlet="outlet"></router-outlet>
+    </div>
+
+    <app-overlay-transparent></app-overlay-transparent>
+    <app-jwt-input *ngIf="sandboxService.isSandboxMode()"></app-jwt-input>
+</div>

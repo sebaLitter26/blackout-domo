@@ -1,0 +1,13 @@
+<button mat-icon-button *ngIf="actions.length > 0" (click)="$event.stopPropagation()" [matMenuTriggerFor]="menu">
+    <mat-icon>more_vert</mat-icon>
+</button>
+
+<mat-menu #menu="matMenu" >
+    <ng-container *ngFor="let action of actions">
+        <button mat-menu-item [style.color]="action.color" (click)="handleAction(action)">
+            <mat-icon [style.color]="action.color">{{action.icon}}</mat-icon>
+            {{action.title}}
+        </button>
+    </ng-container>
+</mat-menu>
+    

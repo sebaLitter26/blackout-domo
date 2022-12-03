@@ -1,0 +1,74 @@
+@use "../../variables" as var;
+
+main {
+    padding: var.$container-padding; 
+
+    .filters-container {
+        display: grid;
+        gap: 0.35rem;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        margin-top: 1rem;
+    }
+
+    .actions-container {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: right;
+        margin-bottom: 1em;
+    
+        .actions-filters {
+            margin-left: auto;
+
+            button:not(:last-child) {
+                margin-right: 0.5rem;
+            }
+        }
+
+        .first-option {
+            ::ng-deep.mat-option-text {
+                color: var(--color-text-fade);
+            }
+        }
+
+        .btn-small {
+            ::ng-deep.mat-button-wrapper {
+                height: 30px;
+            }
+        }
+
+        .mat-form-field {
+            font-size: 12px;
+        
+            ::ng-deep.mat-form-field-flex {
+                padding: 5px 10px 0px 10px;
+            }
+        }
+
+        button {
+            ::ng-deep.mat-button-wrapper {
+                display: flex;
+                flex-direction: row;
+                align-items: center;
+                justify-content: center;
+                text-align: center;
+            }
+        }
+    }
+
+    .no-results{
+        text-align: center;
+    }
+
+    /* Chrome, Safari, Edge, Opera */
+    input[matinput]::-webkit-outer-spin-button,
+    input[matinput]::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+    }
+
+    /* Firefox */
+    input[matinput][type=number] {
+    -moz-appearance: textfield;
+    }
+}

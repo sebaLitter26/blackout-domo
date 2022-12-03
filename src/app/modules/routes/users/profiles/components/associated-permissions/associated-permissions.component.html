@@ -1,0 +1,91 @@
+<div class="permissions-wrap">
+    <!-- Tabla de permisos por asignar -->
+    <div class="example-container">
+        <div class="container">
+            <h2>Permisos por asignar</h2>
+        </div>
+        <div
+            cdkDropList
+            #todoList="cdkDropList"
+            [cdkDropListData]="allPermissionsToAssign"
+            [cdkDropListConnectedTo]="[doneList]"
+            class="example-list"
+            (cdkDropListDropped)="drop($event)"
+        >
+            <!-- renderizado condicional de permisos por asignar -->
+            <app-table-loader
+                [rows]="6"
+                *ngIf="!error; else retry"
+                [columns]="4"
+                [borderRadius]="'0.5em'"
+                [headerCellColor]="'#616161'"
+                [dataCellColor]="'#bdbdbd'"
+                [backgroundColor]="'#212121'"
+            ></app-table-loader>
+            <ng-template #retry>
+                <ng-container
+                    *ngIf="allPermissionsColumnEmpty(); else elseTemplate2"
+                >
+                    <span class="noPermissions">
+                        Sin permisos para asignar
+                    </span>
+                </ng-container>
+                <ng-template #elseTemplate2>
+                    <div
+                        class="example-box"
+                        *ngFor="let permission of allPermissionsToAssign"
+                        cdkDrag
+                    >
+                        <ul>
+                            <li>Permiso: {{ permission.permiso }}</li>
+                            <li>Descripción: {{ permission.descripcion }}</li>
+                        </ul>
+                    </div>
+                </ng-template>
+            </ng-template>
+            <!-- fin renderizado -->
+        </div>
+    </div>
+    <!-- Tabla permisos asignados -->
+    <div class="example-container">
+        <div class="container">
+            <h2>Permisos asignados</h2>
+            <div class="btn-container">
+                <button
+                    [disabled]="noPermissions()"
+                    mat-flat-button
+                    appRoundButton
+                    color="accent"
+                >
+                    Guardar
+                </button>
+            </div>
+        </div>
+        <div
+            cdkDropList
+            #doneList="cdkDropList"
+            [cdkDropListData]="data?.permisos"
+            [cdkDropListConnectedTo]="[todoList]"
+            class="example-list"
+            (cdkDropListDropped)="drop($event)"
+        >
+            <ng-container *ngIf="noPermissions(); else elseTemplate">
+                <span class="noPermissions">
+                    Este perfil no contiene permisos
+                </span>
+            </ng-container>
+            <ng-template #elseTemplate>
+                <div
+                    class="example-box"
+                    *ngFor="let permission of data?.permisos"
+                    cdkDrag
+                >
+                    <ul>
+                        <li>Permiso: {{ permission.permiso }}</li>
+                        <li>Descripción: {{ permission.descripcion }}</li>
+                    </ul>
+                </div>
+            </ng-template>
+        </div>
+    </div>
+</div>

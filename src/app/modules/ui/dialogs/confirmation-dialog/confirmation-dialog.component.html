@@ -1,0 +1,25 @@
+
+<h2 mat-dialog-title>
+    {{ data.title }}
+</h2>
+
+<mat-dialog-content>
+    <p [innerHTML]="data.message"></p>
+    <form [formGroup]="confirmationForm">
+        <mat-form-field *ngIf="data.showObservation">
+            <mat-label>{{ data.observationLabel ?? 'Observación'}}</mat-label>
+            <textarea matInput [placeholder]="data.observationPlaceholder ?? 'Ingrese una observación...'" formControlName="observationControl"></textarea>
+        </mat-form-field>
+    </form>
+</mat-dialog-content>
+<mat-dialog-actions>
+    <button mat-stroked-button [color]="data.color" [mat-dialog-close]="false">No</button>
+    <button 
+        mat-flat-button 
+        [color]="data.color" 
+        [disabled]="confirmationForm.invalid"
+        cdk-focus-initial
+        [mat-dialog-close]="confirmationForm.controls.observationControl.value ?? true">
+        Sí
+    </button>
+</mat-dialog-actions>

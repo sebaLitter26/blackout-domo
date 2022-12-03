@@ -1,0 +1,14 @@
+<main>
+    <div
+        class="zoom-container"
+        *ngIf="_mouseOver"
+    >
+        <mat-icon>zoom_in</mat-icon>
+    </div>
+
+    <img 
+        [src]="data?.imagen" (click)="openPluImage($event)"
+        (mouseover)="_mouseOver = true"
+        (mouseout)="_mouseOver = false"
+    >
+</main>

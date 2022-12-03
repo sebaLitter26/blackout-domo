@@ -1,0 +1,14 @@
+<main>
+    <div class="container">
+        <h1>Gestión de permisos</h1>
+        <div class="btn-container">
+            <button (click)="openDialog()" mat-flat-button appRoundButton color="primary">
+                Crear permiso
+            </button>
+        </div>
+    </div>
+    
+    <app-permissions-list
+        searchBarMargin="0 0 1em 0"
+    ></app-permissions-list>
+</main>

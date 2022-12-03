@@ -1,0 +1,83 @@
+<main>
+    <div>
+        <div 
+            *ngIf="!loading"
+            [style.margin]="searchBarMargin"
+        >
+            <app-dynamic-search
+                [data]="profiles"
+                [searchProperties]="filterProperties"
+                placeholder="Buscar perfiles..."
+                (onFilter)="onSearchResult($event)"
+                fontSize="12px"
+                iconSize="14px"
+            ></app-dynamic-search>
+        </div>
+        
+        <app-dynamic-table
+            *ngIf="filteredProfiles.length > 0 && !loading; else emptyContent"
+            [data]="filteredProfiles"
+            [tableDefinition]="tableDefinition"
+            [borderRadius]="'0.5em'"
+            [useSorting]="useSorting"
+            [useFilters]="useFilters"
+            [useSelection]="useSelection"
+            [allowSelectAll]="allowSelectAll"
+            [customColumnComponents]="customComponents"
+            [itemDetailComponent]="itemDetailComponent"
+            [expandableRows]="expandableRows"
+            [updateSource]="tableUpdateSource.asObservable()"
+            (selectionEvent)="selectionEvent.next($event)"
+        ></app-dynamic-table>
+    </div>
+
+    <ng-template #emptyContent>
+        <div
+            class="message-container"
+            *ngIf="!loading; else tableLoader"
+        >
+            <div class="message-header">
+                <mat-icon>search</mat-icon>
+                <h1>No se encontraron perfiles</h1>
+            </div>
+
+            <p>
+                No se encontraron perfiles para la búsqueda ingresada
+            </p>
+        </div>
+
+        <ng-template #tableLoader>
+            <app-table-loader
+                [rows]="9"
+                *ngIf="!error; else retry"
+                [columns]="6"
+                [borderRadius]="'0.5em'"
+                [headerCellColor]="'#616161'"
+                [dataCellColor]="'#bdbdbd'"
+            ></app-table-loader>
+    
+            <ng-template #retry>
+                <div class="message-container">
+                    <div class="message-header">
+                        <mat-icon [style.color]="'var(--color-warn)'">error</mat-icon>
+                        <h1>Error al cargar perfiles</h1>
+                    </div>
+    
+                    <p>
+                        Se produjo un error al cargar el listado de perfiles, por
+                        favor, intente nuevamente
+                    </p>
+    
+                    <button
+                        mat-flat-button
+                        appRoundButton
+                        color="accent"
+                        (click)="loadProfiles()"
+                    >
+                        Reintentar
+                    </button>
+                </div>
+            </ng-template>
+        </ng-template>
+    </ng-template>
+</main>

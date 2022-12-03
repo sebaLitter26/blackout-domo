@@ -1,0 +1,4 @@
+<main>
+    <input [formControl]="tokenControl" placeholder="Ingrese JWT...">
+    <button mat-button (click)="saveToken()" [disabled]="!tokenControl.value">Guardar</button>
+</main>

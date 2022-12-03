@@ -1,0 +1,17 @@
+<main
+    [@detailExpand]="expanded ? 'expanded' : 'collapsed'"    
+>
+    <div class="strings-container">
+        <p>{{ expanded ? strings : ( this.firstPart.length < this.componentData?.maxLength!? firstPart : firstPart + '...') }}</p>       
+        <p  class="expandTextButtom" 
+            *ngIf="this.strings.length > this.componentData?.maxLength!"
+            (click)="expand($event)"
+            ><strong>{{ expanded ? 'ver menos.' : 'ver más.' }}</strong></p> 
+    </div>    
+        
+    
+    
+    
+   
+    
+</main>

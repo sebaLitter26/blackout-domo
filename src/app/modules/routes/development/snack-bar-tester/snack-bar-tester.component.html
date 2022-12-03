@@ -1,0 +1,13 @@
+<main>
+    <mat-form-field appearance="fill">
+        <mat-label>Mensaje</mat-label>
+        <input matInput [formControl]="messageControl" placeholder="Mensaje a mostrar...">
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+        <mat-label>Duración (ms)</mat-label>
+        <input matInput [formControl]="durationControl" placeholder="Duración en ms...">
+    </mat-form-field>
+
+    <button mat-flat-button color="accent" (click)="letsDance()" style="font-weight: 200;">LET'S DANCE! \o_o/</button>
+</main>

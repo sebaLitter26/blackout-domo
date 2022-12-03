@@ -1,0 +1,71 @@
+<h1 mat-dialog-title>Crear rol</h1>
+<form [formGroup]="myForm">
+    <div class="wrap">
+        <!-- Campos del formulario -->
+        <div class="form-fields">
+            <mat-form-field class="mat-form">
+                <mat-label>Rol</mat-label>
+                <input
+                    matInput
+                    spellcheck="false"
+                    placeholder="Agregue un rol"
+                    autocomplete="off"
+                    formControlName="rol"
+                />
+            </mat-form-field>
+
+            <mat-form-field class="mat-form">
+                <mat-label>Descripción</mat-label>
+                <input
+                    matInput
+                    spellcheck="false"
+                    placeholder="Agregue una descripción"
+                    autocomplete="off"
+                    formControlName="descripcion"
+                />
+            </mat-form-field>
+        </div>
+
+        <!-- Tabla de los perfiles -->
+        <div class="table-container">
+            <app-profiles-list
+                [tableDefinition]="profilesTableDefinition"
+                [hideDisabled]="true"
+                [useSelection]="true"
+                [allowSelectAll]="true"
+                [expandableRows]="false"
+                (selectionEvent)="updateSelectedProfiles($event)"
+            ></app-profiles-list>
+        </div>
+
+        <!-- Tabla de permisos agregados -->
+        <div class="table-container">
+            <app-permissions-list
+                [tableDefinition]="permissionTableDefinition"
+                [permission$]="permissionList.asObservable()"
+                [templateText]="templateText"
+                [loading]="loading"
+                [icon]="icon"
+            ></app-permissions-list>
+        </div>
+
+        <!-- Alerta -->
+        <ng-container *ngIf="alert">
+            <span>El Rol debe tener al menos un Perfil</span>
+        </ng-container>
+
+        <!-- Boton -->
+        <div mat-dialog-actions>
+            <button
+                mat-flat-button
+                appRoundButton
+                color="accent"
+                cdkFocusInitial
+                [disabled]="myForm.invalid"
+                (click)="saveRoles()"
+            >
+                Guardar
+            </button>
+        </div>
+    </div>
+</form>

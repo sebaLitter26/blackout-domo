@@ -1,0 +1,28 @@
+<main style="padding: 20px; box-sizing: border-box;">
+    <h1>ZPL</h1>
+
+    <div style="margin-bottom: 1rem;">
+        <mat-button-toggle-group name="fontStyle" aria-label="Font Style" (change)="setZplFor($event)" [value]="'ean'">
+            <mat-button-toggle value="ean">EAN</mat-button-toggle>
+            <mat-button-toggle value="serial">Serie</mat-button-toggle>
+        </mat-button-toggle-group>
+    </div>
+
+    <div style="margin-bottom: 1rem;">
+        <app-cool-input
+            [placeholder]="'Ingrese etiqueta'"
+            [inputControl]="labelControl"
+        ></app-cool-input>
+    </div>
+
+    <mat-card class="mat-elevation-z0">
+        <mat-card-content>    
+            <mat-form-field>
+                <mat-label>ZPL Code</mat-label>
+                <textarea matInput placeholder="Enter your ZPL code here..." rows="15" [formControl]="zplControl" spellcheck="false"></textarea>
+            </mat-form-field>
+    
+            <button mat-flat-button color="accent" (click)="print()" [disabled]="zplControl.invalid">Print</button>
+        </mat-card-content>
+    </mat-card>
+</main>

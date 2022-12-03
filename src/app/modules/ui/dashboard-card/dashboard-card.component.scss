@@ -1,0 +1,91 @@
+:host {
+    width: 100%;
+}
+
+.mat-card {
+    -webkit-user-select: none;
+    user-select: none;
+    cursor: pointer;
+    box-sizing: border-box;
+
+    .mat-card-content {
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        justify-content: center;
+        margin: 0;
+
+        h1 {
+            font-weight: 600;
+            margin-top: 0;
+        }
+
+        h1, h2, h3 {
+            text-align: left;
+        }
+
+        h2 {
+            color: #757575;
+            line-height: 1.5em;
+        }
+    }
+    
+}
+.chevron_icon {
+    position: absolute;
+    top: 0;
+    right: 0;
+    padding: 0.25em;
+    box-sizing: border-box;
+}
+
+header {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: space-between;
+    width: 100%;
+    
+}
+
+.icon-container {
+    position: absolute;
+    top: 60%;
+    left: 80%;
+}
+
+.icon-wrapper {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+
+    border-radius: 20px;
+    width: 48px;
+    height: 48px;
+    opacity: 0.2;
+    z-index: 1;
+}
+
+i {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+
+    font-size: 20px;
+    opacity: 1;
+
+    z-index: 2;
+}
+
+.expanded-component {
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+}
+

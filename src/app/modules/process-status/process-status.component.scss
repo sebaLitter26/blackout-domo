@@ -1,0 +1,147 @@
+$image-size: 32px;
+$image-container-padding: 10px;
+$default-line-color: #bdbdbd;
+$connector-thickness: 2px;
+$dot-size: 12px;
+
+$labels-margin: calc((#{$connector-thickness} * 2) + (#{$image-container-padding} * 2) + #{$image-size});
+
+:host {
+    width: 100%;
+}
+
+@mixin row {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+}
+
+@mixin label-horizontal {
+    position: absolute;
+    padding: 15px;
+    margin: 0;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+@mixin label-vertical {
+    position: absolute;
+    padding: 7.5px;
+    margin: 0;
+}
+
+main {
+    @include row();
+    width: 100%;
+    position: relative;
+}
+
+img {
+    width: $image-size;
+    height: $image-size;
+    user-select: none;
+}
+
+.labels-container {
+    padding: 15px;
+    min-width: 125px;
+
+    h3 {
+        margin: 0;
+    }
+
+    .secondary-label {
+        font-size: 14px;
+        color: #bdbdbd;
+    }
+}
+
+.left-label {
+    @include label-horizontal();
+    left: $labels-margin;
+    text-align: left;
+}
+
+.right-label {
+    @include label-horizontal();
+    right: $labels-margin;
+    text-align: right
+}
+
+.top-label {
+    @include label-vertical();
+    top: $labels-margin;
+    text-align: center;
+}
+
+.bottom-label {
+    @include label-vertical();
+    bottom: $labels-margin;
+    text-align: center;
+}
+
+.step-panel {
+    @include row();
+    width: 100%;
+}
+
+.step {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+}
+
+.step-container {
+    @include row();
+    align-items: center;
+}
+
+.image-container {
+    width: $image-size;
+    height: $image-size;
+
+    padding: $image-container-padding;
+    border: solid $connector-thickness $default-line-color;
+    border-radius: 50%;
+    cursor: pointer;
+}
+
+.connector {
+    height: $connector-thickness;
+    background-color: $default-line-color;
+}
+
+.dot {
+    height: $dot-size;
+    width: $dot-size;
+    background-color: $default-line-color;
+    border-radius: 50%;
+}
+
+.data-panel {
+    width: 100%;
+    border-radius: 5px;
+    max-height: 550px;
+    overflow: auto;
+}
+
+.blocking-overlay {
+    width: 100vw;
+    height: 100vh;
+    position: fixed;
+    background-color: rgba(0,0,0,0.4);
+    z-index: 20;
+}
+
+@keyframes tilt {
+    0% {
+        transform: rotate(30deg);
+    }
+
+    100% {
+        transform: rotate(60deg);
+    }
+}

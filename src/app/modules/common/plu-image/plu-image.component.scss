@@ -1,0 +1,43 @@
+@use 'sass:math';
+
+$image-size: 64px;
+
+main {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 10px 0px;
+    box-sizing: border-box;
+
+    .zoom-container {
+        position: absolute;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        top: 50%;
+        right: 50%;
+        transform: translate(51%, -50%);
+        width: $image-size;
+        height: $image-size;
+        border-radius: 3px;
+        background-color: rgba($color: #000000, $alpha: 0.6);
+        pointer-events: none;
+
+        .mat-icon {
+            width: math.div($image-size, 2);
+            height: math.div($image-size, 2);
+            font-size: math.div($image-size, 2);
+            line-height: math.div($image-size, 2);
+            color: var(--color-text);
+        }
+    }
+
+    img {
+        width: $image-size;
+        height: $image-size;
+        border-radius: 3px;
+    }
+}

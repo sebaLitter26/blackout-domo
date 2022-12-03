@@ -1,0 +1,213 @@
+<main>
+    <div class="dashboard">
+        <ng-container *ngFor="let item of mapRef; index as i">
+            <div class="dashboard__header__item dash_card">
+                <app-dashboard-card 
+                    [value]="item.value" 
+                    [description]="item.header" 
+                    [color]="item.color" 
+                    [icon]="item.icon"
+                    
+                ></app-dashboard-card>
+                <!-- [expandableDetailComponent]= "renderDetailComponent"
+                    [componentData]="order" -->
+            </div>
+        </ng-container>
+        
+    </div>
+
+    <mat-card class="mat-elevation-z0" *ngIf="order">
+        <mat-card-header class="product-information">
+            <!-- <div class="ean-image-container" *ngIf="data?.conteo?.producto">
+                <img mat-card-image [src]="data?.conteo?.producto?.imagen" alt="{{ data?.conteo?.plu }}">
+            </div> -->
+
+            <div class="product-detail">
+
+                <mat-card-title>PEDIDO</mat-card-title>
+                <mat-card-subtitle>{{ order.idPedido }}</mat-card-subtitle>
+
+                <mat-card-title>SUCURSAL</mat-card-title>
+                <mat-card-subtitle>{{ order.sucursal }}</mat-card-subtitle>
+            </div>
+
+            <div class="product-detail">
+                <mat-card-title>CANAL</mat-card-title>
+                <mat-card-subtitle>{{ order.canal }}</mat-card-subtitle>
+
+                <mat-card-title>TERMINAL</mat-card-title>
+                <mat-card-subtitle>{{ order.idTerminal }}</mat-card-subtitle>
+
+                <mat-card-title>TRANSACCIÓN</mat-card-title>
+                <mat-card-subtitle>{{ order.idTransaccion }}</mat-card-subtitle>
+
+            </div>
+            <div class="product-detail">
+
+                <mat-card-title>CFT</mat-card-title>
+                <mat-card-subtitle>{{ order.cft }}</mat-card-subtitle>
+                
+                <mat-card-title>TEA</mat-card-title>
+                <mat-card-subtitle>{{ order.tea }}</mat-card-subtitle>
+
+                <mat-card-title>Nro de Cuotas</mat-card-title>
+                <mat-card-subtitle>{{ order.cuotas }}</mat-card-subtitle>
+
+            </div>
+            <div class="product-detail">
+                
+                <mat-card-title>PERSEPCIONES</mat-card-title>
+                <mat-card-subtitle>{{ order.percepciones ? '': 'No' }} Posee percepciones</mat-card-subtitle>
+
+                <mat-card-title>{{order.cuit ? 'CUIT' : 'DNI'}}</mat-card-title>
+                <mat-card-subtitle>{{ order.cuit ? order.cuit : order.dni }}</mat-card-subtitle>
+                
+                <!-- <button appRoundButton mat-flat-button color="accent" class="btn btn-info" (click)="OneQuote()">
+                    <mat-icon>money-bill</mat-icon> 1 Cuota
+                </button> -->
+            </div>
+
+
+        </mat-card-header>
+        
+    </mat-card>
+
+    <div class="header" role="header">
+        <h1>Detalle del pedido</h1>
+        <div class="action-btn">
+            <button *ngIf="orderGroup.controls.tipoControl.value ==='Devolucion'" appRoundButton mat-flat-button color="primary" class="btn btn-info" (click)="devolverTotal()">
+                <mat-icon>ballot</mat-icon> Movimiento total
+            </button>
+            <button *ngIf="puedeDevolver()" appRoundButton mat-flat-button color="warn" class="btn btn-info" (click)="realizarDevolucion()">  
+                <!-- realizarDevolucionTotal 
+                    select * from vm_detalle where idpedido = 08786958 ORDER BY fechconf, horaconf
+                -->
+                <mat-icon>money</mat-icon> Realizar negociado
+            </button>
+            <button appRoundButton mat-flat-button color="accent" class="btn btn-info back" (click)="router.navigate(['/orders/orders-list'])">
+                <mat-icon>arrow_back</mat-icon> Volver
+            </button>
+        </div>
+    </div>
+
+    <form [formGroup]="orderGroup" class="header-fixed">
+        <section class="filters-container">
+
+           <!--  <mat-form-field class="state-form-field" appearance="fill" color="primary">
+                <mat-label>EAN/PLU</mat-label>
+
+                <mat-select formControlName="eanPluControl">
+                    <mat-option *ngFor="let sucursal of items" [value]="sucursal.EANs">
+                        {{ sucursal.EANs }}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>  -->
+
+            <mat-form-field appearance="fill">
+                <mat-label>EAN / PLU</mat-label>
+                <input matInput
+                       aria-label="EAN/PLU"
+                       [matAutocomplete]="auto"
+                       autofocus
+                       formControlName="eanPluControl"
+                        >
+                        <!-- (keyup.enter)="searchOrder()" -->
+                <mat-autocomplete #auto="matAutocomplete" [panelWidth]="'auto'">
+                  <mat-option *ngFor="let item of filteredEanPlu | async" [value]="item.plu" (click)="searchOrder(item)">
+                    <img aria-hidden [src]="item.imagen" height="25">
+                    <span> Plu: {{item.plu}}</span> |
+                    <small> Descripción: {{item.descripcion}}</small>
+                  </mat-option>
+                </mat-autocomplete>
+            </mat-form-field>
+
+            <mat-form-field appearance="fill" color="primary">
+                <mat-label>Precio</mat-label>
+                <input matInput autocomplete="off" (keyup.enter)="changeItem()" type="number" required min="0.01" step="0.01" placeholder="Ingrese nuevo precio." formControlName="priceControl">
+            </mat-form-field>
+
+            <mat-form-field class="state-form-field" appearance="fill" color="primary">
+                <mat-label>Cantidad</mat-label>
+                <input matInput type="number" (keyup.enter)="changeItem()" formControlName="quantityControl" required step ="{{this.selectedItem && this.selectedItem.pesable && this.selectedItem.pesable == 'UNI' ? '1' : '0.01'}}" placeholder="Ingrese cantidad." autocomplete="off">
+            </mat-form-field>
+
+        </section>
+
+       <section class="actions-container">
+
+        <div class="state-form-field">
+                
+            <mat-radio-group formControlName="tipoControl">
+                <mat-radio-button class="radio-negociado" value="Facturacion">
+                    Facturación
+                </mat-radio-button>
+                <mat-radio-button class="radio-negociado" value="Devolucion">
+                    Devolución
+                </mat-radio-button>
+            </mat-radio-group>
+            <!-- <mat-label>Tipo de Negociado: </mat-label><br>
+            <mat-slide-toggle formControlName="tipoControl">{{orderGroup.controls.tipoControl.value ? 'Facturación':'Devolución'}}</mat-slide-toggle> -->
+        </div>
+            <div class="actions-filters">
+                <!-- <button
+                    appRoundButton
+                    mat-stroked-button
+                    color="primary"
+                    class="btn-small"
+                    (click)="ponerACero()"
+                >
+                    <mat-icon>clear</mat-icon>&nbsp;
+                    Limpiar todo
+                </button> -->
+
+                <button
+                    appRoundButton
+                    mat-flat-button
+                    color="primary"
+                    class="btn-small"
+                    (click)="changeItem()" 
+                    [disabled]=" orderGroup.invalid && !puedeDevolver()"
+                >
+                <!-- (click)="realizarDevolucionByProduct()" -->
+                    <mat-icon>badget-dollar</mat-icon>&nbsp;
+                    Realizar negociado
+                </button>
+            </div>
+        </section> 
+    </form>
+
+    <section>
+        <div class="table-container">
+            <app-dynamic-table *ngIf="order && order.items.length > 0; else tableLoader"
+                [data]="order.items"
+                [tableDefinition]="tableDefinition"
+                [columnFormaters]="columnFormaters"
+                [customColumnComponents]="customColumnComponents"
+                [columnStyles]="columnStyles"
+                [updateSource]="updateTableFileSource.asObservable()"
+                [borderRadius]="'4px'"
+                [useFilters]="true"
+                [useFiltersDefaultActive]="false"
+                [notFilteredColumns]="notFilteredColumns"
+                [expandableRows]="true"
+                [itemDetailComponent]="itemDetailComponent"
+            ></app-dynamic-table>
+
+            <ng-template #tableLoader>
+                <app-table-loader
+                    *ngIf="loading; else tableNoResult"
+                    [borderRadius]="'4px'"
+                    [columns]="8"
+                    [useLoadingAnimation]="true"
+                    [rows]="1"
+                ></app-table-loader>
+                <ng-template #tableNoResult>
+                    <p class="no-results">NO SE ENCONTRARON ITEMS</p>
+                </ng-template>
+            </ng-template>
+        </div>
+    </section>
+</main>
+
+
+ 

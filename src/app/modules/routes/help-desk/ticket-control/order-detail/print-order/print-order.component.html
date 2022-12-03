@@ -1,0 +1,74 @@
+    
+<main id="to-print" *ngIf="data">
+  
+    <h1>Pedido: {{data.idPedido}}</h1>
+     
+    <section>
+        <p style="color: red" *ngIf="data.pluBonificado && !data.existeAutorizacion">
+            Negociado Contiene PLU Bonificado..!  -  REQUIERE AUTORIZACION..!
+        </p>
+        <div class="table-container">
+            <app-dynamic-table *ngIf="data.items && data.items.length > 0; else tableLoader"
+                [data]="data.items"
+                [tableDefinition]="tableDefinition"
+                [columnFormaters]="columnFormaters"
+                [groupingHeader]="groupingHeaders"
+                [columnStyles]="columnStyles"
+                [borderRadius]="'4px'"
+            ></app-dynamic-table>
+
+            <ng-template #tableLoader>
+                <app-table-loader
+                    *ngIf="loading; else tableNoResult"
+                    [borderRadius]="'4px'"
+                    [columns]="8"
+                    [useLoadingAnimation]='true'
+                    [rows]="1"
+                ></app-table-loader>
+                <ng-template #tableNoResult>
+                    <p class="no-results">NO SE ENCONTRARON ITEMS</p>
+                </ng-template>
+            </ng-template>
+        </div>
+        <h1>*{{data.codebar}}*</h1>
+        
+    </section>
+    <section class="actions-container">
+        <div class="actions-filters">
+
+            <!-- <button
+                appRoundButton
+                mat-flat-button
+                color="primary"
+                class="btn-large"
+                (click)="router.navigate(['/order-list'])"
+            >
+                <mat-icon>arrow_back</mat-icon> Volver
+            </button> -->
+            <button
+                appRoundButton
+                mat-stroked-button
+                color="warn"
+                class="btn-large"
+                (click)="print()"
+            >
+                <mat-icon>print</mat-icon>&nbsp;
+                Imprimir
+            </button>
+    
+            
+            <button
+                appRoundButton
+                mat-flat-button
+                color="accent"
+                class="btn-large"
+                (click)="autorizar()"
+                [disabled]="data.autorizado && !data.existeAutorizacion && data.pluBonificado "
+            >
+                <mat-icon>badget-dollar</mat-icon>&nbsp;
+                Autorizar
+            </button>
+        </div>
+    </section>
+
+</main>

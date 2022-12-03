@@ -1,0 +1,58 @@
+<h1 mat-dialog-title>Editar Rol</h1>
+<form [formGroup]="myForm">
+    <div class="wrap">
+        <!-- Campos del formulario -->
+        <mat-form-field class="mat-form">
+            <mat-label>Número: {{ data.id_rol }}</mat-label>
+            <input disabled matInput placeholder="Modifique el campo" />
+        </mat-form-field>
+
+        <mat-form-field class="mat-form">
+            <mat-label>Rol</mat-label>
+            <input
+                matInput
+                spellcheck="false"
+                placeholder="Modifique el campo"
+                autocomplete="off"
+                formControlName="rol"
+            />
+        </mat-form-field>
+
+        <mat-form-field class="mat-form">
+            <mat-label>Descripción</mat-label>
+            <input
+                matInput
+                spellcheck="false"
+                placeholder="Modifique el campo"
+                autocomplete="off"
+                formControlName="descripcion"
+            />
+        </mat-form-field>
+
+        <mat-form-field class="mat-form">
+            <mat-label>Habilitado: {{ enabled }} </mat-label>
+            <input disabled matInput placeholder="Modifique el campo" />
+        </mat-form-field>
+
+        <mat-form-field class="mat-form">
+            <mat-label>Fecha de creación: {{ data.fecha_creacion}}</mat-label>
+            <input disabled matInput placeholder="Modifique el campo" />
+        </mat-form-field>
+        <!-- Alerta -->
+        <span *ngIf="notValid()">Faltan completar datos.</span>
+        <!-- Botones -->
+        <div class="wrap-btn" mat-dialog-actions>
+            <button
+                mat-flat-button
+                appRoundButton
+                color="accent"
+                [mat-dialog-close]="data.descripcion"
+                cdkFocusInitial
+                [disabled]="myForm.invalid"
+                (click)="saveRol()"
+            >
+                Guardar
+            </button>
+        </div>
+    </div>
+</form>

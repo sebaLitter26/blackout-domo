@@ -1,0 +1,28 @@
+$font-size: 11px;
+
+main {
+    display: inline-block;
+    max-width: 375px;
+}
+
+p {
+    font-size: $font-size;
+    line-height: 11px;
+    
+}
+
+.strings-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+
+.expandTextButtom {
+    font-size: $font-size;
+    cursor: pointer;
+    color: var(--color-accent);
+    cursor: pointer;
+    margin-left: 5px;    
+}

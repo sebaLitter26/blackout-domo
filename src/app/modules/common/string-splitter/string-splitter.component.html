@@ -1,0 +1,10 @@
+<main
+    [@detailExpand]="expanded ? 'expanded' : 'collapsed'"
+    (click)="expand($event)"
+    [style.align-items]="expanded ? 'flex-start' : 'flex-start'"
+>
+    <div class="strings-container">
+        <p *ngFor="let _string of strings">{{ _string }}</p>
+    </div>
+    <mat-icon *ngIf="strings.length > 1">{{ expanded ? 'expand_less' : 'expand_more' }}</mat-icon>
+</main>

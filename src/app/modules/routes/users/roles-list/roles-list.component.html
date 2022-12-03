@@ -1,0 +1,49 @@
+<div>
+    <app-dynamic-table
+        *ngIf="roles.length > 0  && !loading; else tableLoader"
+        [data]="roles"
+        [tableDefinition]="tableDefinition"
+        [borderRadius]="'0.5em'"
+        [useSorting]="false"
+        [useFilters]="useFilters"
+        [useSelection]="useSelection"
+        [allowSelectAll]="allowSelectAll"
+        [customColumnComponents]="customComponents"
+        [itemDetailComponent]="itemDetailComponent"
+        [expandableRows]="true"
+        [updateSource]="tableUpdateSource.asObservable()"
+    ></app-dynamic-table>
+
+    <ng-template #tableLoader>
+        <app-table-loader
+            [rows]="9"
+            *ngIf="!error; else retry"
+            [columns]="6"
+            [borderRadius]="'0.5em'"
+            [headerCellColor]="'#616161'"
+            [dataCellColor]="'#bdbdbd'"
+        ></app-table-loader>
+
+        <ng-template #retry>
+            <div class="retry-container">
+                <div class="error-header">
+                    <mat-icon>error</mat-icon>
+                    <h1>Error al cargar roles</h1>
+                </div>
+
+                <p>
+                    Se produjo un error al cargar el listado de roles, por favor, intente nuevamente
+                </p>
+
+                <button
+                    mat-flat-button
+                    appRoundButton
+                    color="accent"
+                    (click)="loadRoles()"
+                >
+                    Reintentar
+                </button>
+            </div>
+        </ng-template>
+    </ng-template>
+</div>

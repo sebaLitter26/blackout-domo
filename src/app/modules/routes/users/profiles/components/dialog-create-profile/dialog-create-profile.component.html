@@ -1,0 +1,58 @@
+<h1 mat-dialog-title>Crear perfil</h1>
+<form [formGroup]="myForm">
+    <div class="wrap">
+        <!-- Campos del formulario -->
+        <div class="form-fields">
+            <mat-form-field class="mat-form">
+                <mat-label>Perfil</mat-label>
+                <input
+                    matInput
+                    spellcheck="false"
+                    placeholder="Agregue un perfil"
+                    autocomplete="off"
+                    formControlName="profile"
+                />
+            </mat-form-field>
+
+            <mat-form-field class="mat-form">
+                <mat-label>Descripción</mat-label>
+                <input
+                    matInput
+                    spellcheck="false"
+                    placeholder="Agregue una descripción"
+                    autocomplete="off"
+                    formControlName="description"
+                />
+            </mat-form-field>
+        </div>
+
+        <div class="table-container">
+            <app-permissions-list
+                [tableDefinition]="permissionsTableDefinition"
+                [hideDisabled]="true"
+                [useSelection]="true"
+                [allowSelectAll]="true"
+                (selectionEvent)="updateSelectedPermissions($event)"
+            ></app-permissions-list>
+        </div>
+
+        <!-- Alerta -->
+        <ng-container *ngIf="alert">
+            <span>El perfil debe tener al menos un permiso</span>
+        </ng-container>
+        
+        <!-- Boton -->
+        <div mat-dialog-actions>
+            <button
+                mat-flat-button
+                appRoundButton
+                color="accent"
+                cdkFocusInitial
+                [disabled]="myForm.invalid"
+                (click)="saveProfile()"
+            >
+                Guardar
+            </button>
+        </div>
+    </div>
+</form>

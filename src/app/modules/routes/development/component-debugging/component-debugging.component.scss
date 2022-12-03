@@ -1,0 +1,26 @@
+main {
+    padding: 10px;
+    box-sizing: border-box;
+    //display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: flex-start;
+    width: 100%;
+
+    .dashboard {
+        display: grid;
+        grid-template-columns: repeat(5, 1fr);
+        gap: 10px;
+        align-items: center;
+        margin-bottom: 1rem;
+    
+        h1 {
+            margin: 0;
+        }
+    
+        .dash_card{
+            width: -webkit-fill-available;
+            
+        }
+    }
+}

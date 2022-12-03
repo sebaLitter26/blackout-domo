@@ -1,0 +1,103 @@
+<main>
+    <h1>Mesa de Devoluciones</h1>
+
+    <form [formGroup]="orderListGroup">
+    <section class="filters-container">
+
+        <mat-form-field class="state-form-field" appearance="fill" color="primary">
+            <mat-label>Sucursal</mat-label>
+
+            <mat-select formControlName="sucursalControl">
+                <mat-option *ngFor="let sucursal of sucursales" [value]="sucursal">
+                    {{ sucursal }}
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
+
+        <mat-form-field appearance="fill" color="primary">
+            <mat-label>Nro de pedido</mat-label>
+            <input matInput autocomplete="off" type="number" placeholder="Ingrese nro de pedido..." formControlName="pedidoControl">
+        </mat-form-field>
+
+        <mat-form-field appearance="fill" color="primary">
+            <mat-label>Terminal</mat-label>
+            <input matInput autocomplete="off" type="number" placeholder="Ingrese nro de terminal." formControlName="terminalControl">
+        </mat-form-field>
+
+        <mat-form-field class="state-form-field" appearance="fill" color="primary">
+            <mat-label>Transacción</mat-label>
+            <input matInput formControlName="transactionControl" type="number" placeholder="Ingrese nro de transacción." autocomplete="off">
+        </mat-form-field>
+
+        <mat-form-field appearance="fill" color="primary">
+            <mat-label>Fecha del ticket</mat-label>
+            <input autocomplete="off" matInput [matDatepicker]="picker" formControlName="ticketDate">
+            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
+            <mat-error>Se requiere una fecha del ticket</mat-error>
+        </mat-form-field>
+
+    </section>
+
+    <section class="actions-container">
+        <div class="actions-filters">
+            <button
+                appRoundButton
+                mat-stroked-button
+                color="primary"
+                class="btn-small"
+                (click)="orderListGroup.reset()"
+            >
+                <mat-icon>clear</mat-icon>&nbsp;
+                Limpiar
+            </button>
+
+            <button
+                appRoundButton
+                mat-flat-button
+                color="primary"
+                class="btn-small"
+                type="submit"
+                [disabled]="orderListGroup.invalid"
+                (click)="searchPedidos()"
+            >
+                <mat-icon>search</mat-icon>&nbsp;
+                Consultar
+            </button>
+        </div>
+    </section>
+</form>
+
+    <section>
+        <div class="table-container">
+            <app-dynamic-table *ngIf="orders.length > 0; else tableLoader"
+                [data]="orders"
+                [tableDefinition]="tableDefinition"
+                [columnFormaters]="columnFormaters"
+                [customColumnComponents]="customColumnComponents"
+                [columnStyles]="columnStyles"
+                [updateSource]="updateTableFileSource.asObservable()"
+                
+                [borderRadius]="'4px'"
+                (selectionEvent)="updateSelectedItems($event)"
+            ></app-dynamic-table>
+            <!-- 
+                    [itemDetailComponent]="itemDetailComponent"
+                [expandableRows]="true" 
+            -->
+
+            <ng-template #tableLoader>
+                <app-table-loader
+                    *ngIf="loading; else tableNoResult"
+                    [borderRadius]="'4px'"
+                    [columns]="8"
+                    [useLoadingAnimation]='true'
+                    [rows]="1"
+                ></app-table-loader>
+                <ng-template #tableNoResult>
+                    <p class="no-results">NO SE ENCONTRARON PEDIDOS</p>
+                </ng-template>
+            </ng-template>
+        </div>
+    </section>
+</main>

@@ -1,0 +1,79 @@
+<main>
+    <header class="top-container">
+        <h2>
+            <i class="fa fa-fw fa-user-cog"></i>&nbsp;Configurar estación
+        </h2>
+    
+        <button id="close-btn" mat-icon-button (click)="dialogRef.close()">
+            <mat-icon>close</mat-icon>
+        </button>
+    </header>
+    
+    <div class="config-container">
+        <mat-form-field appearance="fill">
+            <mat-label>Nombre del puesto</mat-label>
+            <input matInput [formControl]="hostNameControl" type="text" autocomplete="off" cdkFocusInitial placeholder="Ingrese el nombre del puesto...">
+            <mat-error *ngIf="hostNameControl.hasError('required')">El campo es requerido</mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="fill">
+            <mat-label>Depósito</mat-label>
+            <input matInput [formControl]="ubicationControl" type="text" autocomplete="off" cdkFocusInitial placeholder="Ingrese la ubicación del puesto...">
+        </mat-form-field>
+
+        <h2>Ubicación</h2>
+
+        <div class="ubication-container">
+            <div class="ubications">
+                <mat-form-field appearance="fill" style="max-width: 48%;">
+                    <mat-label>Origen</mat-label>
+                    <input matInput [formControl]="origenControl" type="text" autocomplete="off" cdkFocusInitial placeholder="Ingrese la ubicacion de origen del puesto...">
+                </mat-form-field>
+
+                <mat-form-field appearance="fill" style="max-width: 48%;">
+                    <mat-label>Destino</mat-label>
+                    <input matInput [formControl]="destinoControl" type="text" autocomplete="off" cdkFocusInitial placeholder="Ingrese la ubicacion de destino del puesto...">
+                </mat-form-field>
+            </div>
+        </div>
+
+        <h2>Impresoras</h2>
+
+        <div class="printer-labels-container">
+            <div class="printer-label" *ngFor="let option of labelTypeOptions; let i = index;">
+                <mat-form-field appearance="fill" style="max-width: 200px;">
+                    <input matInput [disabled]="true" [placeholder]="labelTypeOptions[i].displayValue">
+                </mat-form-field>
+
+                <div class="port-container">
+                    <mat-form-field appearance="fill" style="max-width: 200px;">
+                        <mat-label>Puerto</mat-label>
+                        <mat-select [(ngModel)]="selectedPorts[i]">
+                            <mat-option [value]="null">- Ninguno -</mat-option>
+                            <mat-option *ngFor="let option of portOptions" [value]="option.value">
+                                {{ option.displayValue }}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+
+                    <mat-icon *ngIf="selectedPorts[i] == null">error</mat-icon>
+                </div>
+                
+                <button
+                    mat-flat-button
+                    color="primary"
+                    (click)="printTestLabel(selectedPorts[i])"
+                    appRoundButton
+                    [disabled]="selectedPorts[i] == undefined || selectedPorts[i] == null"
+                >
+                    Probar puerto
+                </button>
+            </div>
+        </div>
+        
+        <div class="submit">
+            <button mat-stroked-button appRoundButton color="accent" [mat-dialog-close]="false">Cancelar</button>
+            <button mat-flat-button appRoundButton color="accent" [disabled]="hostNameControl.invalid" [mat-dialog-close]="getConfig()">Aceptar</button>
+        </div>
+    </div>
+</main>

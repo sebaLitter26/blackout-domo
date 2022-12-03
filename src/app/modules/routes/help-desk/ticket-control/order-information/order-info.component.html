@@ -1,0 +1,28 @@
+<main>
+    <section>
+        <div class="table-container">
+            <app-dynamic-table *ngIf="data && data.devoluciones && data.devoluciones.length > 1; else tableLoader"
+                [data]="data.devoluciones"
+                [tableDefinition]="tableDefinition"
+                [columnFormaters]="columnFormaters"
+                [customColumnComponents]="customColumnComponents"
+                [columnStyles]="columnStyles"
+                [updateSource]="updateTableFileSource.asObservable()"
+                [borderRadius]="'4px'"
+            ></app-dynamic-table>
+
+            <ng-template #tableLoader>
+                <app-table-loader
+                    *ngIf="loading; else tableNoResult"
+                    [borderRadius]="'4px'"
+                    [columns]="8"
+                    [useLoadingAnimation]='true'
+                    [rows]="1"
+                ></app-table-loader>
+                <ng-template #tableNoResult>
+                    <p class="no-results">NO SE ENCONTRARON ITEMS</p>
+                </ng-template>
+            </ng-template>
+        </div>
+    </section>
+</main>

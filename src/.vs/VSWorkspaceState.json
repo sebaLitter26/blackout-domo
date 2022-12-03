@@ -1,0 +1,17 @@
+{
+  "ExpandedNodes": [
+    "",
+    "\\app",
+    "\\app\\modules",
+    "\\app\\modules\\routes",
+    "\\app\\modules\\routes\\development",
+    "\\app\\modules\\routes\\development\\component-debugging",
+    "\\app\\modules\\routes\\reports",
+    "\\app\\modules\\routes\\reports\\dispatch-planification",
+    "\\app\\modules\\ui",
+    "\\app\\modules\\ui\\dynamic-table",
+    "\\app\\modules\\ui\\dynamic-table\\dynamic-table"
+  ],
+  "SelectedNode": "\\app\\modules\\routes\\reports\\operation-state\\operation-state.component.html",
+  "PreviewInSolutionExplorer": false
+}

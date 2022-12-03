@@ -1,0 +1,53 @@
+<mat-card 
+    matRipple (click)="__onClick__()"
+    [style.width]="contentWidth"
+    >
+    
+
+    <mat-card-content>
+        <ng-container 
+            *ngIf="this.expandableDetailComponent != null"
+        >
+        <mat-icon
+            class="chevron_icon" 
+            [@rotate]="expandedItem ? 'bottom' : 'right'"
+        >
+            chevron_right</mat-icon>
+        </ng-container>
+        <h2 [style.font-size]="descriptionSize">{{ description }}</h2>        
+        <h1 [style.font-size]="valueSize">{{ value }}</h1>
+        
+        <header>                      
+            <div class="icon-container">
+                <i
+                    [ngClass]="icon"
+                    [style.color]="color"
+                ></i>
+
+                <div
+                    class="icon-wrapper"
+                    [style.background-color]="color"
+                >
+                </div>
+            </div>
+        </header>                  
+        <ng-container>          
+            <div
+                [@detailExpand]="expandedItem ? 'expanded' : 'collapsed'"
+            >
+                <!-- Host para componentes dinámicos. Se toma el componente inyectado para mostrar los detalles de la fila. -->
+                <ng-template itemDetailHost></ng-template>
+            </div>
+        </ng-container>
+        
+    </mat-card-content>
+</mat-card>
+<!-- 
+<ng-container *ngIf="this.expandableDetailComponent" matColumnDef="chevron">
+    <th mat-header-cell *matHeaderCellDef></th>
+    <td mat-cell *matCellDef="let element" class="chevron-cell item-cell">
+        <mat-icon id="expand-icon" [@rotate]="element == expandedItem ? 'bottom' : 'right'"
+            
+        >chevron_right</mat-icon>
+    </td>
+</ng-container> -->
